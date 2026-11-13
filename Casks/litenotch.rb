@@ -12,7 +12,7 @@ cask "litenotch" do
 
   # Every Mac with a notch is Apple silicon.
   depends_on arch: :arm64
-  depends_on macos: ">= :sonoma"
+  depends_on macos: :sonoma
 
   app "LiteNotch.app"
   binary "#{appdir}/LiteNotch.app/Contents/Helpers/litenotch"
