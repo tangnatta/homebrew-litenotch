@@ -11,6 +11,7 @@ cask "litenotch" do
   homepage "https://github.com/tangnatta/LiteNotch"
 
   # Every Mac with a notch is Apple silicon.
+  conflicts_with cask: "litenotch@beta"
   depends_on arch: :arm64
   depends_on macos: :sonoma
 
