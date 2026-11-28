@@ -23,17 +23,19 @@ cask "litenotch@beta" do
   # block for declarative steps; older Homebrew only knows the block, so both
   # are here until the steps form is old enough to rely on. Then LiteNotch is
   # opened, so it runs again after `brew upgrade` (which quits the old copy,
-  # see `uninstall quit:`) and starts right after `brew install`.
+  # see `uninstall quit:`) and starts right after `brew install`. Opening
+  # must never fail the install: `open` run by Homebrew can fail
+  # (kLSUnknownErr, seen on 0.2.8-beta) and Homebrew then rolls the upgrade back.
   if respond_to?(:postflight_steps)
     postflight_steps do
       run "/usr/bin/xattr", args: ["-dr", "com.apple.quarantine", "{{appdir}}/LiteNotch.app"]
-      run "/usr/bin/open", args: ["{{appdir}}/LiteNotch.app"]
+      run "/bin/sh", args: ["-c", "/usr/bin/open \"$0\" || true", "{{appdir}}/LiteNotch.app"]
     end
   else
     postflight do
       system_command "/usr/bin/xattr",
                      args: ["-dr", "com.apple.quarantine", "#{appdir}/LiteNotch.app"]
-      system_command "/usr/bin/open", args: ["#{appdir}/LiteNotch.app"]
+      system_command "/usr/bin/open", args: ["#{appdir}/LiteNotch.app"], must_succeed: false
     end
   end
 
