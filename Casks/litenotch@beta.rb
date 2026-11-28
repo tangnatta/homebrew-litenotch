@@ -2,8 +2,8 @@
 # (tangnatta/LiteNotch, .github/workflows/release.yml) rewrites `version` and `sha256` for every
 # tagged release, so edit the rest by hand and leave those two to CI.
 cask "litenotch@beta" do
-  version "0.2.7-beta"
-  sha256 "7246a53de29b19ec0aa8820d9f56e848bb7f64e02e41ce3ef1d4e9f719942541"
+  version "0.2.8-beta"
+  sha256 "2d338f0be234b4d5f42a36bee4ac476b9e93e404d52e8257a53320d43b7aee9b"
 
   url "https://github.com/tangnatta/LiteNotch/releases/download/v#{version}/LiteNotch-#{version}-arm64.zip"
   name "LiteNotch (beta)"
