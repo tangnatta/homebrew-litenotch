@@ -21,15 +21,19 @@ cask "litenotch" do
   # The app is ad-hoc signed, not notarized: without this, Gatekeeper refuses
   # to open a downloaded copy. Homebrew 7.0.16 deprecated the `postflight`
   # block for declarative steps; older Homebrew only knows the block, so both
-  # are here until the steps form is old enough to rely on.
+  # are here until the steps form is old enough to rely on. Then LiteNotch is
+  # opened, so it runs again after `brew upgrade` (which quits the old copy,
+  # see `uninstall quit:`) and starts right after `brew install`.
   if respond_to?(:postflight_steps)
     postflight_steps do
       run "/usr/bin/xattr", args: ["-dr", "com.apple.quarantine", "{{appdir}}/LiteNotch.app"]
+      run "/usr/bin/open", args: ["{{appdir}}/LiteNotch.app"]
     end
   else
     postflight do
       system_command "/usr/bin/xattr",
                      args: ["-dr", "com.apple.quarantine", "#{appdir}/LiteNotch.app"]
+      system_command "/usr/bin/open", args: ["#{appdir}/LiteNotch.app"]
     end
   end
 
